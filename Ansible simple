@@ -1,0 +1,36 @@
+Playbook with Handler
+---
+- hosts: manohar
+  become: true
+  tasks:
+    - name: Installs apache2  manohar
+      apt: pkg=apache2 state=present update_cache=true
+      notify:
+         - startapache2
+
+  handlers:
+    - name: apache2
+      service: name=apache2 state=started
+
+
+
+Install Package
+---
+- hosts: manohar
+  become: true
+  tasks:
+  - name: Install list of packages
+    apt: name=apache2
+
+
+Install list of packages 
+---
+- hosts: manohar
+  become: true
+  tasks:
+  - name: Install list of packages
+    apt: name={{item}}
+    with_items:
+      - unzip
+      - apache2
+      - tomcat9
